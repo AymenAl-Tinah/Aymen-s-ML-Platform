@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Loading - Aymen's ML Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="dark-theme">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="fas fa-robot"></i> Aymen's ML Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/data">Data</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/preprocess">Preprocess</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/visualize">Visualize</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/train">Train</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/evaluate">Evaluate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/documentation">Report</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Professional Progress Tracker -->
+    <div class="progress-tracker-container">
+        <div class="container">
+            <div class="progress-tracker">
+                <div class="progress-step" data-step="home" data-page="/">
+                    <div class="step-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="step-label">Home</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step active" data-step="data" data-page="/data">
+                    <div class="step-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="step-label">Data</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="preprocess" data-page="/preprocess">
+                    <div class="step-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="step-label">Preprocess</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="visualize" data-page="/visualize">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="step-label">Visualize</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="train" data-page="/train">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="step-label">Train</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="evaluate" data-page="/evaluate">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="step-label">Evaluate</div>
+                </div>
+                <div class="progress-line"></div>
+                
+                <div class="progress-step" data-step="report" data-page="/documentation">
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="step-label">Report</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <h2 class="mb-4"><i class="fas fa-database"></i> Data Loading & Detection</h2>
+
+        <!-- Upload Section -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-upload"></i> Step 1: Upload Dataset</h5>
+            </div>
+            <div class="card-body">
+                <!-- Drag and Drop Zone -->
+                <div id="dropZone" class="drop-zone mb-3" onclick="handleDropZoneClick(event)">
+                    <div class="drop-zone-content">
+                        <i class="fas fa-cloud-upload-alt fa-4x mb-3 text-primary"></i>
+                        <h5>Drag & Drop your CSV file here</h5>
+                        <p class="text-muted">or</p>
+                        <button type="button" class="btn btn-outline-primary" id="browseBtn">
+                            <i class="fas fa-folder-open me-2"></i>Browse Files
+                        </button>
+                        <p class="text-muted mt-3 mb-0"><small>Supported format: CSV (max 100MB)</small></p>
+                    </div>
+                    <div id="fileInfo" class="file-info" style="display: none;">
+                        <i class="fas fa-file-csv fa-3x text-success mb-2"></i>
+                        <p class="mb-1"><strong id="fileName"></strong></p>
+                        <p class="text-muted mb-2"><small id="fileSize"></small></p>
+                        <button type="button" class="btn btn-sm btn-danger" id="removeBtn">
+                            <i class="fas fa-times me-1"></i>Remove
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" class="d-none" id="fileInput" accept=".csv" required>
+                    <button type="submit" class="btn btn-primary btn-lg w-100" id="uploadBtn" disabled>
+                        <i class="fas fa-magic me-2"></i>Upload & Analyze Dataset
+                    </button>
+                </form>
+                
+                <div id="uploadProgress" class="mt-3" style="display: none;">
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%">
+                            Analyzing...
+                        </div>
+                    </div>
+                    <p class="text-center mt-2"><i class="fas fa-spinner fa-spin me-2"></i>Uploading and analyzing dataset...</p>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            .drop-zone {
+                border: 3px dashed #667eea;
+                border-radius: 15px;
+                padding: 40px;
+                text-align: center;
+                transition: all 0.3s ease;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+                cursor: pointer;
+            }
+            
+            .drop-zone:hover {
+                border-color: #764ba2;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+                transform: translateY(-2px);
+            }
+            
+            .drop-zone.drag-over {
+                border-color: #11998e;
+                background: linear-gradient(135deg, rgba(17, 153, 142, 0.15) 0%, rgba(56, 239, 125, 0.15) 100%);
+                transform: scale(1.02);
+            }
+            
+            .drop-zone-content > * {
+                pointer-events: auto;
+            }
+            
+            .drop-zone-content button {
+                pointer-events: auto;
+            }
+            
+            .file-info {
+                padding: 20px;
+            }
+            
+            [data-bs-theme="dark"] .drop-zone {
+                border-color: #667eea;
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            }
+            
+            [data-bs-theme="dark"] .drop-zone:hover {
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            }
+        </style>
+
+        <!-- Dataset Info -->
+        <div id="datasetInfo" class="card mb-4" style="display: none;">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle"></i> Dataset Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-box">
+                            <i class="fas fa-table"></i>
+                            <h4 id="rowCount">-</h4>
+                            <p>Rows</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-box">
+                            <i class="fas fa-columns"></i>
+                            <h4 id="colCount">-</h4>
+                            <p>Columns</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-box">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4 id="missingCount">-</h4>
+                            <p>Missing Values</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-box">
+                            <i class="fas fa-copy"></i>
+                            <h4 id="duplicateCount">-</h4>
+                            <p>Duplicates</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-3" id="detectBtn">
+                    <i class="fas fa-search"></i> Auto-Detect Column Roles
+                </button>
+            </div>
+        </div>
+
+        <!-- Detection Results -->
+        <div id="detectionResults" class="card mb-4" style="display: none;">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-magic"></i> Automatic Column Detection</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-lightbulb"></i> <strong>Smart Detection:</strong> The system has automatically analyzed your dataset and detected column roles. Review and confirm below.
+                </div>
+
+                <!-- Target Column -->
+                <div class="mb-4">
+                    <h6><i class="fas fa-bullseye"></i> Target Column (Dependent Variable)</h6>
+                    <select class="form-select" id="targetSelect">
+                        <option value="">Select target column...</option>
+                    </select>
+                    <div id="targetJustification" class="alert alert-info mt-2" style="display: none;"></div>
+                </div>
+
+                <!-- Feature Columns -->
+                <div class="mb-4">
+                    <h6><i class="fas fa-list"></i> Feature Columns (Independent Variables)</h6>
+                    <div id="featuresList" class="column-list"></div>
+                </div>
+
+                <!-- Meta Columns -->
+                <div class="mb-4">
+                    <h6><i class="fas fa-tag"></i> Metadata Columns (Will be excluded)</h6>
+                    <div id="metaList" class="column-list"></div>
+                </div>
+
+                <!-- Column Types -->
+                <div class="mb-4">
+                    <h6><i class="fas fa-chart-bar"></i> Column Types</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="text-primary">Numerical Columns</h6>
+                                    <div id="numericalList"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="text-success">Categorical Columns</h6>
+                                    <div id="categoricalList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success btn-lg" id="confirmBtn">
+                    <i class="fas fa-check"></i> Confirm & Continue to Preprocessing
+                </button>
+            </div>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+        // Drag and Drop functionality
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInfo = document.getElementById('fileInfo');
+        const dropZoneContent = document.querySelector('.drop-zone-content');
+        const browseBtn = document.getElementById('browseBtn');
+        const removeBtn = document.getElementById('removeBtn');
+        
+        // Browse button click
+        browseBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        // Remove button click
+        removeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearFile();
+        });
+        
+        // Drop zone click (for entire area)
+        function handleDropZoneClick(e) {
+            if (e.target === dropZone || e.target.closest('.drop-zone-content')) {
+                fileInput.click();
+            }
+        }
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Highlight drop zone when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.add('drag-over');
+            }, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.remove('drag-over');
+            }, false);
+        });
+        
+        // Handle dropped files
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }, false);
+        
+        // Handle file selection via input
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        // Handle file
+        function handleFile(file) {
+            // Check if it's a CSV file
+            if (!file.name.endsWith('.csv')) {
+                showAlert('Please select a CSV file', 'danger');
+                return;
+            }
+            
+            // Check file size (100MB max)
+            const maxSize = 100 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showAlert('File size exceeds 100MB limit', 'danger');
+                return;
+            }
+            
+            // Create a new DataTransfer object and add the file
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+            
+            // Display file info
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatFileSize(file.size);
+            dropZoneContent.style.display = 'none';
+            fileInfo.style.display = 'block';
+            uploadBtn.disabled = false;
+        }
+        
+        // Clear file
+        function clearFile() {
+            fileInput.value = '';
+            dropZoneContent.style.display = 'block';
+            fileInfo.style.display = 'none';
+            uploadBtn.disabled = true;
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+        
+        // Upload form handler
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showAlert('Please select a file', 'danger');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            document.getElementById('uploadProgress').style.display = 'block';
+            document.getElementById('uploadBtn').disabled = true;
+            
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('✓ Dataset uploaded and analyzed successfully!', 'success');
+                    displayDatasetInfo(data.info);
+                    document.getElementById('datasetInfo').style.display = 'block';
+                } else {
+                    showAlert('Error: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Upload failed: ' + error.message, 'danger');
+            } finally {
+                document.getElementById('uploadProgress').style.display = 'none';
+                document.getElementById('uploadBtn').disabled = false;
+            }
+        });
+        
+        // Display dataset info
+        function displayDatasetInfo(info) {
+            document.getElementById('rowCount').textContent = info.shape[0];
+            document.getElementById('colCount').textContent = info.shape[1];
+            
+            const totalMissing = Object.values(info.missing_values).reduce((a, b) => a + b, 0);
+            document.getElementById('missingCount').textContent = totalMissing;
+            document.getElementById('duplicateCount').textContent = info.duplicate_rows;
+        }
+        
+        // Detect columns button
+        document.getElementById('detectBtn').addEventListener('click', async () => {
+            document.getElementById('detectBtn').disabled = true;
+            document.getElementById('detectBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
+            
+            try {
+                const response = await fetch('/api/detect_columns', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayDetectionResults(data.detection);
+                    document.getElementById('detectionResults').style.display = 'block';
+                    showAlert('Column detection completed!', 'success');
+                } else {
+                    showAlert('Error: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Detection failed: ' + error.message, 'danger');
+            } finally {
+                document.getElementById('detectBtn').disabled = false;
+                document.getElementById('detectBtn').innerHTML = '<i class="fas fa-search"></i> Auto-Detect Column Roles';
+            }
+        });
+        
+        // Display detection results
+        function displayDetectionResults(detection) {
+            // Populate target select
+            const targetSelect = document.getElementById('targetSelect');
+            targetSelect.innerHTML = '<option value="">Select target column...</option>';
+            detection.features.concat([detection.target]).forEach(col => {
+                const option = document.createElement('option');
+                option.value = col;
+                option.textContent = col;
+                if (col === detection.target) {
+                    option.selected = true;
+                }
+                targetSelect.appendChild(option);
+            });
+            
+            // Show target justification
+            const targetJustKey = detection.target + '_target';
+            if (detection.justifications[targetJustKey]) {
+                document.getElementById('targetJustification').textContent = detection.justifications[targetJustKey];
+                document.getElementById('targetJustification').style.display = 'block';
+            }
+            
+            // Display features
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = detection.features.map(col => 
+                `<span class="badge bg-primary m-1">${col}</span>`
+            ).join('');
+            
+            // Display meta columns
+            const metaList = document.getElementById('metaList');
+            if (detection.meta.length > 0) {
+                metaList.innerHTML = detection.meta.map(col => 
+                    `<span class="badge bg-secondary m-1">${col}</span>`
+                ).join('');
+            } else {
+                metaList.innerHTML = '<span class="text-muted">No metadata columns detected</span>';
+            }
+            
+            // Display column types
+            document.getElementById('numericalList').innerHTML = 
+                detection.column_types.numerical.map(col => 
+                    `<span class="badge bg-info m-1">${col}</span>`
+                ).join('') || '<span class="text-muted">None</span>';
+            
+            document.getElementById('categoricalList').innerHTML = 
+                detection.column_types.categorical.map(col => 
+                    `<span class="badge bg-success m-1">${col}</span>`
+                ).join('') || '<span class="text-muted">None</span>';
+        }
+        
+        // Confirm button
+        document.getElementById('confirmBtn').addEventListener('click', async () => {
+            const targetCol = document.getElementById('targetSelect').value;
+            
+            if (!targetCol) {
+                showAlert('Please select a target column', 'warning');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/confirm_columns', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({target: targetCol})
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Column selections confirmed! Redirecting to preprocessing...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/preprocess';
+                    }, 1500);
+                } else {
+                    showAlert('Error: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Confirmation failed: ' + error.message, 'danger');
+            }
+        });
+        
+        // Alert helper
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => alert.remove(), 5000);
+        }
+    </script>
+</body>
+</html>

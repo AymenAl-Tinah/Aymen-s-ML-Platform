@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Model Evaluation{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold mb-2">
+                <i class="fas fa-chart-bar text-primary me-3"></i>Model Evaluation
+            </h1>
+            <p class="text-muted lead mb-0">Compare and evaluate your trained models</p>
+        </div>
+    </div>
+
+    <!-- Evaluate Button -->
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <button class="btn btn-primary btn-lg" id="evaluateBtn">
+                <i class="fas fa-chart-line me-2"></i>Evaluate All Models
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="evaluationProgress" class="card mb-4" style="display: none;">
+        <div class="card-body text-center">
+            <div class="spinner-border text-primary mb-3"></div>
+            <h5>Evaluating models...</h5>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div id="evaluationResults" style="display: none;">
+        <!-- Best Model Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Best Performing Model</h5>
+            </div>
+            <div class="card-body">
+                <h4 id="bestModelName">-</h4>
+                <div id="bestModelMetrics"></div>
+            </div>
+        </div>
+
+        <!-- Model Comparison Table -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-table me-2"></i>Model Comparison</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="comparisonTable">
+                        <thead><tr></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Performance Comparison</h5>
+            </div>
+            <div class="card-body">
+                <div id="comparisonPlot"></div>
+            </div>
+        </div>
+
+        <!-- Next Step -->
+        <div class="text-center mt-4">
+            <a href="/documentation" class="btn btn-success btn-lg">
+                <i class="fas fa-arrow-right me-2"></i>Generate Final Report
+            </a>
+        </div>
+    </div>
+
+    <div id="alertContainer"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const evaluateBtn = document.getElementById('evaluateBtn');
+    const evaluationProgress = document.getElementById('evaluationProgress');
+    const evaluationResults = document.getElementById('evaluationResults');
+    
+    evaluateBtn.addEventListener('click', async () => {
+        evaluationProgress.style.display = 'block';
+        evaluateBtn.disabled = true;
+        
+        try {
+            const response = await fetch('/api/evaluate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({})
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                displayResults(data);
+                await loadComparisonPlot();
+                evaluationResults.style.display = 'block';
+                showAlert('✓ Evaluation completed successfully!', 'success');
+            } else {
+                showAlert('Error: ' + data.error, 'danger');
+            }
+        } catch (error) {
+            showAlert('Evaluation failed: ' + error.message, 'danger');
+        } finally {
+            evaluationProgress.style.display = 'none';
+            evaluateBtn.disabled = false;
+        }
+    });
+    
+    function displayResults(data) {
+        document.getElementById('bestModelName').textContent = data.best_model;
+        
+        // Display metrics
+        const metricsDiv = document.getElementById('bestModelMetrics');
+        let metricsHTML = '<div class="row">';
+        for (const [key, value] of Object.entries(data.best_metrics)) {
+            if (key !== 'model_name' && key !== 'confusion_matrix' && key !== 'classification_report') {
+                metricsHTML += `
+                    <div class="col-md-3 mb-2">
+                        <div class="metric-box">
+                            <h6>${key.toUpperCase()}</h6>
+                            <h4>${typeof value === 'number' ? value.toFixed(4) : value || 'N/A'}</h4>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        metricsHTML += '</div>';
+        metricsDiv.innerHTML = metricsHTML;
+        
+        // Display comparison table with save buttons
+        const table = document.getElementById('comparisonTable');
+        const thead = table.querySelector('thead tr');
+        const tbody = table.querySelector('tbody');
+        
+        if (data.comparison.length > 0) {
+            const headers = Object.keys(data.comparison[0]);
+            thead.innerHTML = headers.map(k => `<th>${k.replace(/_/g, ' ').toUpperCase()}</th>`).join('') + '<th>ACTION</th>';
+            
+            tbody.innerHTML = data.comparison.map((row, idx) => {
+                const modelName = row.model_name || row.Model || 'Model_' + idx;
+                return '<tr>' + 
+                    Object.values(row).map(v => 
+                        `<td>${typeof v === 'number' ? v.toFixed(4) : v || 'N/A'}</td>`
+                    ).join('') + 
+                    `<td>
+                        <button class="btn btn-sm btn-success" onclick="saveModel('${modelName}')">
+                            <i class="fas fa-save me-1"></i>Save
+                        </button>
+                    </td>` +
+                    '</tr>';
+            }).join('');
+        }
+    }
+    
+    async function loadComparisonPlot() {
+        try {
+            const response = await fetch('/api/evaluate/plot/comparison', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({})
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                const plotData = JSON.parse(data.plot);
+                Plotly.newPlot('comparisonPlot', plotData.data, plotData.layout, {responsive: true});
+            }
+        } catch (error) {
+            console.error('Failed to load comparison plot:', error);
+        }
+    }
+    
+    function showAlert(message, type) {
+        const alertContainer = document.getElementById('alertContainer');
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type} alert-dismissible fade show`;
+        alert.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        alertContainer.appendChild(alert);
+        setTimeout(() => alert.remove(), 5000);
+    }
+    
+});
+
+// Save model function (global scope for onclick)
+async function saveModel(modelName) {
+    const btn = event.target.closest('button');
+    const originalHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+    
+    try {
+        const response = await fetch('/api/model/save', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ model_name: modelName })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            btn.innerHTML = '<i class="fas fa-check me-2"></i>Saved!';
+            btn.classList.add('btn-success');
+            
+            // Show download links
+            showAlert(`
+                Model saved successfully!<br>
+                <a href="${data.model_path}" class="alert-link" download>Download Model</a> | 
+                <a href="${data.prediction_code_path}" class="alert-link" download>Download Prediction Code</a> | 
+                <a href="${data.readme_path}" class="alert-link" download>Download README</a>
+            `, 'success');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }, 3000);
+        } else {
+            throw new Error(data.error || 'Failed to save model');
+        }
+    } catch (error) {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        showAlert('Error saving model: ' + error.message, 'danger');
+    }
+}
+
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type} alert-dismissible fade show`;
+    alert.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    alertContainer.appendChild(alert);
+    setTimeout(() => alert.remove(), 10000);
+}
+</script>
+{% endblock %}

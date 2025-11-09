@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aymen's ML Platform - Automated Machine Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="dark-theme">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-robot"></i> Aymen's ML Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/data">Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/preprocess">Preprocess</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/visualize">Visualize</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/train">Train</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/evaluate">Evaluate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/documentation">Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">
+                        <i class="fas fa-brain text-primary"></i> Automated Machine Learning Platform
+                    </h1>
+                    <p class="lead mb-4">
+                        Transform your data into insights with our professional-grade, end-to-end machine learning platform. 
+                        No coding required - just upload your dataset and let AI do the rest.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="/data" class="btn btn-primary btn-lg px-4">
+                            <i class="fas fa-upload"></i> Get Started
+                        </a>
+                        <button class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#featuresModal">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://via.placeholder.com/600x400/007bff/ffffff?text=ML+Pipeline" alt="ML Pipeline" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container my-5">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-star text-warning"></i> Key Features
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Smart Data Detection</h4>
+                    <p>Automatically detects feature types, target variables, and metadata columns with intelligent justifications.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h4>Auto Preprocessing</h4>
+                    <p>Handles missing values, encoding, scaling, and outlier removal automatically with full transparency.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Interactive Visualizations</h4>
+                    <p>Beautiful, interactive charts for data exploration including distributions, correlations, and outliers.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Multi-Level Models</h4>
+                    <p>Train models from basic to advanced (XGBoost, LightGBM) with automatic hyperparameter tuning.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4>Model Comparison</h4>
+                    <p>Compare all models side-by-side with comprehensive metrics and automatically select the best performer.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h4>Professional Reports</h4>
+                    <p>Generate polished DOCX reports with all results, visualizations, and recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Section -->
+    <div class="workflow-section">
+        <div class="container">
+            <h2 class="text-center mb-5 text-white">
+                <i class="fas fa-project-diagram"></i> Simple 6-Step Workflow
+            </h2>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <h5>Upload Data</h5>
+                        <p>Upload your CSV file</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <h5>Detect Columns</h5>
+                        <p>Auto-detect features</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <h5>Preprocess</h5>
+                        <p>Clean & transform data</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <h5>Visualize</h5>
+                        <p>Explore your data</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <h5>Train Models</h5>
+                        <p>Auto-train & tune</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <h5>Generate Report</h5>
+                        <p>Export results</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="/data" class="btn btn-light btn-lg">
+                    <i class="fas fa-rocket"></i> Start Your Project Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-robot"></i> Aymen's ML Platform</h5>
+                    <p>Professional-grade automated machine learning platform built with Flask, Scikit-learn, and modern web technologies.</p>
+                    <p class="text-muted small">© 2025 Aymen's Labs - All Rights Reserved</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/data">Upload Data</a></li>
+                        <li><a href="/train">Train Models</a></li>
+                        <li><a href="/documentation">Generate Report</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Technologies</h5>
+                    <ul class="list-unstyled">
+                        <li>Flask & Python</li>
+                        <li>Scikit-learn & XGBoost</li>
+                        <li>Bootstrap & Plotly</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>&copy; 2025 Aymen's Labs. Built with <i class="fas fa-heart text-danger"></i> for Data Scientists.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Features Modal -->
+    <div class="modal fade" id="featuresModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Platform Features</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>What makes ML Auto Project special?</h6>
+                    <ul>
+                        <li><strong>Zero Coding Required:</strong> Complete ML workflow through intuitive GUI</li>
+                        <li><strong>Intelligent Automation:</strong> Smart detection of data types and roles</li>
+                        <li><strong>Enterprise-Grade Models:</strong> From basic to advanced algorithms</li>
+                        <li><strong>Full Transparency:</strong> Every decision is logged and explained</li>
+                        <li><strong>Production Ready:</strong> Save models and transformers for deployment</li>
+                        <li><strong>Professional Documentation:</strong> Generate publication-ready reports</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="/data" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+    </script>
+</body>
+</html>

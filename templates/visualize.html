@@ -1,0 +1,539 @@
+{% extends "base.html" %}
+
+{% block title %}Data Visualization{% endblock %}
+
+{% block content %}
+
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h1 class="display-5 fw-bold mb-2">
+                            <i class="fas fa-chart-line text-primary me-3"></i>Data Visualization
+                        </h1>
+                        <p class="text-muted lead mb-0">Explore your data through interactive charts and graphs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Card -->
+        <div class="card mb-4 border-0 shadow-lg">
+            <div class="card-body p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="card-title mb-3">
+                            <i class="fas fa-info-circle text-info me-2"></i>How to Use This Page
+                        </h5>
+                        <p class="mb-2"><i class="fas fa-check text-success me-2"></i>Click the button below to generate all visualizations automatically</p>
+                        <p class="mb-2"><i class="fas fa-check text-success me-2"></i>Explore different aspects of your dataset through interactive charts</p>
+                        <p class="mb-0"><i class="fas fa-check text-success me-2"></i>Hover over charts to see detailed information and use toolbar to download</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <button class="btn btn-primary btn-lg px-5 py-3 shadow" id="generatePlotsBtn">
+                            <i class="fas fa-magic me-2"></i>Generate Visualizations
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingSpinner" class="text-center my-5" style="display: none;">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+            <p class="mt-3">Generating visualizations...</p>
+        </div>
+
+        <div id="plotsContainer" style="display: none;">
+            <!-- Success Message -->
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Success!</strong> All visualizations have been generated. Scroll down to explore your data.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Missing Values Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Missing Values Analysis
+                        </h5>
+                        <span class="badge bg-light text-dark">Data Quality</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Identify columns with missing data</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="missingPlot" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <!-- Distribution Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-area me-2"></i>Feature Distributions
+                        </h5>
+                        <span class="badge bg-light text-dark">Numerical Features</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Understand the distribution of numerical features</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="distributionPlot" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <!-- Correlation Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-th me-2"></i>Correlation Matrix
+                        </h5>
+                        <span class="badge bg-light text-dark">Relationships</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Discover relationships between features</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="correlationPlot" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <!-- Categorical Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-pie-chart me-2"></i>Categorical Features
+                        </h5>
+                        <span class="badge bg-light text-dark">Categories</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Explore categorical data distributions</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="categoricalPlot" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <!-- Target Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bullseye me-2"></i>Target Distribution
+                        </h5>
+                        <span class="badge bg-light text-dark">Target Variable</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Analyze your target variable</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="targetPlot" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <!-- Outliers Chart -->
+            <div class="card mb-4 border-0 shadow-lg">
+                <div class="card-header bg-gradient text-white py-3" style="background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="fas fa-box me-2"></i>Outlier Detection
+                        </h5>
+                        <span class="badge bg-light text-dark">Data Quality</span>
+                    </div>
+                    <small class="d-block mt-2 opacity-75">Identify potential outliers in your data</small>
+                </div>
+                <div class="card-body p-0">
+                    <div id="outliersPlot" class="chart-container"></div>
+                </div>
+            </div>
+
+            <!-- Next Step Card -->
+            <div class="card border-0 shadow-lg mt-5">
+                <div class="card-body text-center p-5">
+                    <i class="fas fa-brain text-primary" style="font-size: 4rem; opacity: 0.8;"></i>
+                    <h3 class="mt-4 mb-3">Ready for the Next Step?</h3>
+                    <p class="text-muted mb-4">You've successfully visualized your data. Now it's time to train machine learning models!</p>
+                    <a href="/train" class="btn btn-success btn-lg px-5 py-3 shadow">
+                        <i class="fas fa-rocket me-2"></i>Start Model Training
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="alertContainer"></div>
+    </div>
+
+    <style>
+        .chart-container {
+            min-height: 500px;
+            width: 100%;
+            background-color: var(--bs-body-bg);
+            border-radius: 0.375rem;
+        }
+        
+        .card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid var(--bs-border-color);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .card-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Dark theme overrides */
+        [data-bs-theme="dark"] .card {
+            background-color: var(--bs-dark-bg-subtle);
+            border-color: var(--bs-border-color);
+        }
+        
+        [data-bs-theme="dark"] .card-header {
+            background-color: var(--bs-primary) !important;
+        }
+        
+        /* Ensure Plotly charts respect dark theme */
+        .js-plotly-plot .plotly {
+            background: transparent !important;
+        }
+        
+        /* Loading spinner */
+        #loadingSpinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 2rem;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Get current theme
+        function getCurrentTheme() {
+            return document.documentElement.getAttribute('data-bs-theme') || 'light';
+        }
+
+        // Generate plots button click handler
+        const generatePlots = async () => {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const generateBtn = document.getElementById('generatePlotsBtn');
+            const plotsContainer = document.getElementById('plotsContainer');
+            
+            loadingSpinner.style.display = 'flex';
+            generateBtn.disabled = true;
+            plotsContainer.style.display = 'none';
+            
+            try {
+                console.log('Fetching visualization data...');
+                const response = await fetch('/api/visualize/all');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                if (data.success && data.plots) {
+                    console.log('Received plot data, rendering...', Object.keys(data.plots));
+                    await displayPlots(data.plots);
+                    plotsContainer.style.display = 'block';
+                    showAlert('Visualizations generated successfully!', 'success');
+                } else {
+                    const errorMsg = data.error || 'No plot data received from server';
+                    console.error('Backend error:', errorMsg);
+                    showAlert(`Error: ${errorMsg}`, 'danger');
+                }
+            } catch (error) {
+                console.error('Error generating plots:', error);
+                showAlert(`Failed to generate plots: ${error.message}`, 'danger');
+            } finally {
+                loadingSpinner.style.display = 'none';
+                generateBtn.disabled = false;
+            }
+        };
+
+        // Attach event listener to generate button
+        document.getElementById('generatePlotsBtn').addEventListener('click', generatePlots);
+
+        // Listen for theme changes and redraw plots if needed
+        window.addEventListener('themeChanged', (e) => {
+            const plotsContainer = document.getElementById('plotsContainer');
+            if (plotsContainer && plotsContainer.style.display !== 'none') {
+                console.log('Theme changed to:', e.detail.theme, '- Redrawing plots...');
+                // Redraw all plots with new theme
+                setTimeout(() => generatePlots(), 100);
+            }
+        });
+        
+        async function displayPlots(plots) {
+            console.log('Displaying plots with data:', Object.keys(plots));
+            if (!plots || Object.keys(plots).length === 0) {
+                throw new Error('No plot data received');
+            }
+            
+            const isDark = getCurrentTheme() === 'dark';
+            console.log(`Current theme: ${isDark ? 'dark' : 'light'}`);
+            
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                displaylogo: false,
+                scrollZoom: true,
+                toImageButtonOptions: {
+                    format: 'svg',
+                    filename: 'ml_plot',
+                    height: 500,
+                    width: 800,
+                    scale: 1
+                },
+                modeBarButtonsToRemove: ['select2d', 'lasso2d'],
+                modeBarButtonsToAdd: [
+                    {
+                        name: 'Download as PNG',
+                        icon: Plotly.Icons.camera,
+                        click: function(gd) {
+                            Plotly.downloadImage(gd, {
+                                format: 'png',
+                                width: 1200,
+                                height: 800,
+                                filename: 'ml_plot'
+                            });
+                        }
+                    }
+                ]
+            };
+            
+            let plotsRendered = 0;
+            const plotPromises = [];
+            
+            // Function to render a single plot
+            const renderPlot = (plotId, plotData) => {
+                return new Promise((resolve) => {
+                    try {
+                        const container = document.getElementById(plotId);
+                        if (!container) {
+                            console.warn(`Container not found: ${plotId}`);
+                            return resolve(false);
+                        }
+                        
+                        // Clear previous plot
+                        container.innerHTML = '';
+                        
+                        // Parse plot data if it's a string
+                        let plotConfig;
+                        try {
+                            plotConfig = typeof plotData === 'string' ? JSON.parse(plotData) : plotData;
+                            if (!plotConfig || !plotConfig.data) {
+                                console.warn(`Invalid plot data for ${plotId}`, plotConfig);
+                                return resolve(false);
+                            }
+                        } catch (parseError) {
+                            console.error(`Error parsing plot data for ${plotId}:`, parseError);
+                            return resolve(false);
+                        }
+                        
+                        // Prepare layout with theme support
+                        const baseLayout = {
+                            ...(plotConfig.layout || {}),
+                            height: 500,
+                            margin: { t: 40, b: 80, l: 60, r: 20, pad: 5 },
+                            paper_bgcolor: '#ffffff',
+                            plot_bgcolor: '#ffffff',
+                            font: {
+                                family: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                                size: 12,
+                                color: '#212529'
+                            },
+                            xaxis: {
+                                ...(plotConfig.layout?.xaxis || {}),
+                                showgrid: true,
+                                gridcolor: 'rgba(0, 0, 0, 0.1)',
+                                linecolor: 'rgba(0, 0, 0, 0.1)',
+                                tickfont: {
+                                    color: 'rgba(0, 0, 0, 0.6)'
+                                },
+                                title: {
+                                    ...(plotConfig.layout?.xaxis?.title || {}),
+                                    font: {
+                                        size: 12,
+                                        color: 'rgba(0, 0, 0, 0.6)'
+                                    }
+                                }
+                            },
+                            yaxis: {
+                                ...(plotConfig.layout?.yaxis || {}),
+                                showgrid: true,
+                                gridcolor: 'rgba(0, 0, 0, 0.1)',
+                                linecolor: 'rgba(0, 0, 0, 0.1)',
+                                tickfont: {
+                                    color: 'rgba(0, 0, 0, 0.6)'
+                                },
+                                title: {
+                                    ...(plotConfig.layout?.yaxis?.title || {}),
+                                    font: {
+                                        size: 12,
+                                        color: 'rgba(0, 0, 0, 0.6)'
+                                    }
+                                }
+                            },
+                            legend: {
+                                ...(plotConfig.layout?.legend || {}),
+                                font: {
+                                    color: 'rgba(0, 0, 0, 0.6)'
+                                },
+                                bgcolor: 'rgba(0,0,0,0)'
+                            },
+                            hoverlabel: {
+                                ...(plotConfig.layout?.hoverlabel || {}),
+                                bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                bordercolor: 'rgba(0, 0, 0, 0.1)',
+                                font: {
+                                    color: '#212529'
+                                },
+                                namelength: 50
+                            },
+                            title: plotConfig.layout?.title ? {
+                                ...plotConfig.layout.title,
+                                font: {
+                                    ...(plotConfig.layout.title.font || {}),
+                                    color: 'rgba(0, 0, 0, 0.9)'
+                                }
+                            } : undefined
+                        };
+                        
+                        // Create and render the plot
+                        Plotly.newPlot(container, plotConfig.data, baseLayout, config)
+                            .then(() => {
+                                console.log(`Successfully rendered ${plotId}`);
+                                resolve(true);
+                            })
+                            .catch(plotError => {
+                                console.error(`Error rendering ${plotId}:`, plotError);
+                                container.innerHTML = `
+                                    <div class="alert alert-warning">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        Failed to render chart. ${plotError.message}
+                                    </div>
+                                `;
+                                resolve(false);
+                            });
+                            
+                    } catch (error) {
+                        console.error(`Unexpected error in renderPlot for ${plotId}:`, error);
+                        resolve(false);
+                    }
+                });
+            };
+            
+            // Queue all plot renders
+            if (plots.missing_values) {
+                plotPromises.push(renderPlot('missingPlot', plots.missing_values).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            if (plots.distribution) {
+                plotPromises.push(renderPlot('distributionPlot', plots.distribution).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            if (plots.correlation) {
+                plotPromises.push(renderPlot('correlationPlot', plots.correlation).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            if (plots.categorical) {
+                plotPromises.push(renderPlot('categoricalPlot', plots.categorical).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            if (plots.target) {
+                plotPromises.push(renderPlot('targetPlot', plots.target).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            if (plots.outliers) {
+                plotPromises.push(renderPlot('outliersPlot', plots.outliers).then(success => {
+                    if (success) plotsRendered++;
+                }));
+            }
+            
+            // Wait for all plots to render
+            await Promise.all(plotPromises);
+            
+            console.log(`Rendering complete. Successfully rendered ${plotsRendered} out of ${Object.keys(plots).length} plots`);
+            
+            if (plotsRendered === 0) {
+                throw new Error('No plots could be rendered. The data might not be suitable for visualization.');
+            }
+            
+            // Trigger resize to ensure proper rendering
+            window.dispatchEvent(new Event('resize'));
+            
+            return plotsRendered;
+        }
+        
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) {
+                console.warn('Alert container not found');
+                return;
+            }
+            
+            // Clear previous alerts
+            alertContainer.innerHTML = '';
+            
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show d-flex align-items-center`;
+            alert.role = 'alert';
+            
+            // Add icon based on alert type
+            let icon = 'info-circle';
+            if (type === 'success') icon = 'check-circle';
+            else if (type === 'warning') icon = 'exclamation-triangle';
+            else if (type === 'danger') icon = 'exclamation-circle';
+            
+            alert.innerHTML = `
+                <i class="fas fa-${icon} me-2"></i>
+                <div class="flex-grow-1">${message}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            alertContainer.appendChild(alert);
+            
+            // Auto-dismiss after 7 seconds
+            setTimeout(() => {
+                if (alert.parentNode === alertContainer) {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 150);
+                }
+            }, 7000);
+            
+            return alert;
+        }
+    });
+</script>
+{% endblock %}

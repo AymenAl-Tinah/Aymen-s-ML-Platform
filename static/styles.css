@@ -1,0 +1,1235 @@
+/* ML Auto Project - Custom Styles */
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #6c757d;
+    --success-color: #11998e;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-bg: #f8f9fa;
+    --dark-text: #212529;
+}
+
+/* Navbar Enhancements */
+.navbar {
+    backdrop-filter: blur(10px);
+    background: rgba(102, 126, 234, 0.95) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 5px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 0;
+    margin-bottom: 50px;
+}
+
+.hero-section h1 {
+    font-weight: 700;
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    opacity: 0.95;
+}
+
+/* Feature Cards */
+.feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h4 {
+    color: var(--dark-text);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: var(--secondary-color);
+    line-height: 1.6;
+}
+
+/* Workflow Section */
+.workflow-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 0;
+    margin-top: 50px;
+}
+
+.workflow-step {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: white;
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.workflow-step h5 {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.workflow-step p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 0;
+    list-style: none;
+}
+
+.progress-steps .step {
+    flex: 1;
+    text-align: center;
+    padding: 15px 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    transition: all 0.3s ease;
+}
+
+.progress-steps .step.active {
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(13, 110, 253, 0.3);
+}
+
+.progress-steps .step.completed {
+    background: var(--success-color);
+    color: white;
+}
+
+/* Stat Boxes */
+.stat-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.stat-box h4 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.stat-box p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+/* Metric Boxes */
+.metric-box {
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid var(--primary-color);
+}
+
+.metric-box h6 {
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.metric-box h4 {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Column Lists */
+.column-list {
+    padding: 15px;
+    background: var(--light-bg);
+    border-radius: 5px;
+    min-height: 50px;
+}
+
+.column-list .badge {
+    margin: 3px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Tables */
+.table {
+    background: white;
+}
+
+.table thead th {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-lg {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+    background: linear-gradient(135deg, #0e8578 0%, #2dd46a 100%);
+}
+
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: 50px;
+}
+
+.footer h5 {
+    color: white;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: white;
+}
+
+.footer ul {
+    padding-left: 0;
+}
+
+.footer ul li {
+    margin-bottom: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 50px 0;
+    }
+    
+    .progress-steps {
+        flex-direction: column;
+    }
+    
+    .progress-steps .step {
+        margin: 5px 0;
+    }
+    
+    .workflow-step {
+        margin-bottom: 20px;
+    }
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Plotly Charts */
+.js-plotly-plot {
+    width: 100% !important;
+}
+
+#missingPlot, #distributionPlot, #correlationPlot, 
+#categoricalPlot, #targetPlot, #outliersPlot {
+    min-height: 400px;
+    width: 100%;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0a58ca;
+}
+
+/* SIMPLE DARK THEME */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+    color: #eee !important;
+}
+
+body.dark-theme .hero-section {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+body.dark-theme .workflow-section {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+body.dark-theme footer {
+    background: #0f0f1e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .navbar {
+    background: rgba(15, 52, 96, 0.95) !important;
+}
+
+body.dark-theme h1, body.dark-theme h2, body.dark-theme h3, 
+body.dark-theme h4, body.dark-theme h5, body.dark-theme h6 {
+    color: #eee !important;
+}
+
+body.dark-theme .card {
+    background-color: #16213e !important;
+    color: #eee !important;
+    border: 1px solid #2d3748 !important;
+}
+
+body.dark-theme .card-header {
+    background-color: #0f3460 !important;
+    color: white !important;
+}
+
+body.dark-theme .table {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .table thead th {
+    background-color: #0f3460 !important;
+    color: white !important;
+}
+
+body.dark-theme .table td,
+body.dark-theme .table th {
+    border-color: #2d3748 !important;
+    color: #eee !important;
+}
+
+body.dark-theme .form-control,
+body.dark-theme .form-select {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .form-control:focus,
+body.dark-theme .form-select:focus {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #667eea !important;
+}
+
+body.dark-theme .stat-box {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%) !important;
+    color: white !important;
+}
+
+body.dark-theme .column-list,
+body.dark-theme .metric-box {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+}
+
+body.dark-theme .progress-steps .step {
+    background-color: #0f3460 !important;
+    color: #aaa !important;
+}
+
+body.dark-theme .progress-steps .step.active {
+    background-color: #667eea !important;
+    color: white !important;
+}
+
+body.dark-theme .progress-steps .step.completed {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark-theme .feature-card {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .feature-card h4 {
+    color: #eee !important;
+}
+
+body.dark-theme .feature-card p {
+    color: #aaa !important;
+}
+
+body.dark-theme .alert {
+    border: 1px solid #2d3748 !important;
+}
+
+body.dark-theme .text-muted {
+    color: #aaa !important;
+}
+
+body.dark-theme .lead {
+    color: #ccc !important;
+}
+
+/* Additional dark theme fixes for ALL backgrounds */
+body.dark-theme .bg-light {
+    background-color: #16213e !important;
+}
+
+body.dark-theme .bg-white {
+    background-color: #16213e !important;
+}
+
+body.dark-theme .modal-content {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .modal-header {
+    background-color: #0f3460 !important;
+    border-bottom-color: #2d3748 !important;
+}
+
+body.dark-theme .modal-footer {
+    background-color: #0f3460 !important;
+    border-top-color: #2d3748 !important;
+}
+
+body.dark-theme .list-group-item {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .badge {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+}
+
+body.dark-theme .dropdown-menu {
+    background-color: #16213e !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .dropdown-item {
+    color: #eee !important;
+}
+
+body.dark-theme .dropdown-item:hover {
+    background-color: #0f3460 !important;
+}
+
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .btn-light {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .btn-light:hover {
+    background-color: #16213e !important;
+}
+
+body.dark-theme .accordion-button {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+}
+
+body.dark-theme .accordion-body {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .nav-tabs .nav-link {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .nav-tabs .nav-link.active {
+    background-color: #667eea !important;
+    color: white !important;
+}
+
+body.dark-theme .breadcrumb {
+    background-color: #16213e !important;
+}
+
+body.dark-theme .breadcrumb-item {
+    color: #eee !important;
+}
+
+body.dark-theme .pagination .page-link {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .pagination .page-link:hover {
+    background-color: #16213e !important;
+}
+
+body.dark-theme .pagination .page-item.active .page-link {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+body.dark-theme pre,
+body.dark-theme code {
+    background-color: #0f0f1e !important;
+    color: #eee !important;
+}
+
+body.dark-theme hr {
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .border {
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .text-dark {
+    color: #eee !important;
+}
+
+body.dark-theme .text-secondary {
+    color: #aaa !important;
+}
+
+body.dark-theme .container,
+body.dark-theme .container-fluid {
+    color: #eee !important;
+}
+
+body.dark-theme p {
+    color: #ccc !important;
+}
+
+body.dark-theme label {
+    color: #eee !important;
+}
+
+body.dark-theme small {
+    color: #aaa !important;
+}
+
+/* Force dark on checkboxes and radio labels */
+body.dark-theme .form-check-label {
+    color: #eee !important;
+}
+
+body.dark-theme .form-check-input {
+    background-color: #0f3460 !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .form-check-input:checked {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+/* Force dark on all divs and sections */
+body.dark-theme div {
+    color: inherit;
+}
+
+body.dark-theme section {
+    background-color: transparent !important;
+}
+
+/* Force dark on progress bars */
+body.dark-theme .progress {
+    background-color: #0f3460 !important;
+}
+
+/* Force dark on spinners */
+body.dark-theme .spinner-border {
+    color: #667eea !important;
+}
+
+/* Force dark on all text elements */
+body.dark-theme strong,
+body.dark-theme b {
+    color: #eee !important;
+}
+
+body.dark-theme span {
+    color: inherit;
+}
+
+/* Force dark on list groups */
+body.dark-theme .list-group {
+    background-color: transparent !important;
+}
+
+/* Force dark on wells and panels */
+body.dark-theme .well,
+body.dark-theme .panel {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+/* Force dark on any remaining white backgrounds */
+body.dark-theme * {
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme .card .card-body {
+    background-color: #16213e !important;
+    color: #eee !important;
+}
+
+body.dark-theme .card .card-header {
+    background-color: #0f3460 !important;
+    color: white !important;
+}
+
+body.dark-theme .card .card-header.bg-primary {
+    background-color: #667eea !important;
+}
+
+body.dark-theme .card .card-header.bg-success {
+    background-color: #10b981 !important;
+}
+
+/* Fix table striped rows */
+body.dark-theme .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-theme .table-striped tbody tr:nth-of-type(even) {
+    background-color: transparent !important;
+}
+
+body.dark-theme .table tbody tr {
+    background-color: transparent !important;
+}
+
+body.dark-theme .table tbody tr:hover {
+    background-color: rgba(102, 126, 234, 0.2) !important;
+}
+
+/* Fix alert backgrounds */
+body.dark-theme .alert-success {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    color: #10b981 !important;
+    border-color: #10b981 !important;
+}
+
+body.dark-theme .alert-info {
+    background-color: rgba(13, 202, 240, 0.2) !important;
+    color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+}
+
+body.dark-theme .alert-warning {
+    background-color: rgba(255, 193, 7, 0.2) !important;
+    color: #ffc107 !important;
+    border-color: #ffc107 !important;
+}
+
+body.dark-theme .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2) !important;
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+/* Fix table responsive wrapper */
+body.dark-theme .table-responsive {
+    background-color: transparent !important;
+}
+
+/* Fix any remaining tbody backgrounds */
+body.dark-theme tbody {
+    background-color: transparent !important;
+}
+
+body.dark-theme thead {
+    background-color: transparent !important;
+}
+
+/* Better color contrast for readability */
+body.dark-theme .btn-primary {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+    color: white !important;
+}
+
+body.dark-theme .btn-primary:hover {
+    background-color: #5568d3 !important;
+    border-color: #5568d3 !important;
+}
+
+body.dark-theme .btn-success {
+    background-color: #10b981 !important;
+    border-color: #10b981 !important;
+    color: white !important;
+}
+
+body.dark-theme .btn-success:hover {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+}
+
+body.dark-theme .btn-danger {
+    background-color: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: white !important;
+}
+
+body.dark-theme .btn-danger:hover {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+}
+
+body.dark-theme .btn-warning {
+    background-color: #f59e0b !important;
+    border-color: #f59e0b !important;
+    color: white !important;
+}
+
+body.dark-theme .btn-warning:hover {
+    background-color: #d97706 !important;
+    border-color: #d97706 !important;
+}
+
+body.dark-theme .btn-info {
+    background-color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+    color: white !important;
+}
+
+body.dark-theme .btn-info:hover {
+    background-color: #0aa2c0 !important;
+    border-color: #0aa2c0 !important;
+}
+
+/* Better badge colors */
+body.dark-theme .badge.bg-primary {
+    background-color: #667eea !important;
+}
+
+body.dark-theme .badge.bg-success {
+    background-color: #10b981 !important;
+}
+
+body.dark-theme .badge.bg-danger {
+    background-color: #ef4444 !important;
+}
+
+body.dark-theme .badge.bg-warning {
+    background-color: #f59e0b !important;
+}
+
+body.dark-theme .badge.bg-info {
+    background-color: #0dcaf0 !important;
+}
+
+/* Better text colors for visibility */
+body.dark-theme .text-primary {
+    color: #818cf8 !important;
+}
+
+body.dark-theme .text-success {
+    color: #34d399 !important;
+}
+
+body.dark-theme .text-danger {
+    color: #f87171 !important;
+}
+
+body.dark-theme .text-warning {
+    color: #fbbf24 !important;
+}
+
+body.dark-theme .text-info {
+    color: #22d3ee !important;
+}
+
+/* Fix table headers - FORCE DARK */
+body.dark-theme table thead tr {
+    background-color: #0f3460 !important;
+}
+
+body.dark-theme table thead th {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+body.dark-theme table th {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+}
+
+body.dark-theme table td {
+    background-color: transparent !important;
+    color: #eee !important;
+}
+
+/* Fix h6 and other headings */
+body.dark-theme h6 {
+    color: #eee !important;
+}
+
+body.dark-theme h5 {
+    color: #eee !important;
+}
+
+body.dark-theme h4 {
+    color: #eee !important;
+}
+
+body.dark-theme h3 {
+    color: #eee !important;
+}
+
+body.dark-theme h2 {
+    color: #eee !important;
+}
+
+body.dark-theme h1 {
+    color: #eee !important;
+}
+
+/* Fix input group text (% sign) */
+body.dark-theme .input-group-text {
+    background-color: #0f3460 !important;
+    color: #eee !important;
+    border-color: #2d3748 !important;
+}
+
+/* Fix small text */
+body.dark-theme small.text-muted {
+    color: #aaa !important;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* ============================================================================
+   PROFESSIONAL PROGRESS TRACKER
+   ============================================================================ */
+
+.progress-tracker-container {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 25px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+body.dark-theme .progress-tracker-container {
+    background: linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.progress-tracker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.progress-step:hover {
+    transform: translateY(-3px);
+}
+
+.step-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+.step-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.progress-step:hover .step-icon::before {
+    width: 100%;
+    height: 100%;
+}
+
+.step-icon i {
+    position: relative;
+    z-index: 1;
+}
+
+.step-label {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.progress-step:hover .step-label {
+    color: rgba(255, 255, 255, 1);
+}
+
+/* Active Step */
+.progress-step.active .step-icon {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    border-color: #11998e;
+    color: white;
+    box-shadow: 0 0 20px rgba(17, 153, 142, 0.6), 0 0 40px rgba(17, 153, 142, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(17, 153, 142, 0.6), 0 0 40px rgba(17, 153, 142, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(17, 153, 142, 0.8), 0 0 60px rgba(17, 153, 142, 0.6);
+    }
+}
+
+.progress-step.active .step-label {
+    color: white;
+    font-weight: 700;
+}
+
+/* Completed Step */
+.progress-step.completed .step-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+}
+
+.progress-step.completed .step-icon::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: #11998e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.progress-step.completed .step-label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Progress Lines */
+.progress-line {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+    margin: 0 10px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+    transition: width 0.6s ease;
+    box-shadow: 0 0 10px rgba(17, 153, 142, 0.5);
+}
+
+.progress-line.completed::before {
+    width: 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .progress-tracker {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .progress-step {
+        margin: 10px 15px;
+    }
+    
+    .progress-line {
+        display: none;
+    }
+    
+    .step-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .step-label {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 576px) {
+    .progress-tracker-container {
+        padding: 15px 0;
+    }
+    
+    .step-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .step-label {
+        font-size: 10px;
+    }
+}
+
+/* Dark Theme Footer Fix */
+body.dark-theme footer {
+    background-color: #1a1f3a !important;
+    color: #eee !important;
+}
+
+body.dark-theme footer .text-center {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    color: #eee !important;
+}
+
+/* Dark Theme Alert Fix */
+body.dark-theme .alert-info {
+    background-color: #1a3a52 !important;
+    border-color: #2d5a7b !important;
+    color: #a8d5ff !important;
+}
+
+body.dark-theme .alert-success {
+    background-color: #1a4d2e !important;
+    border-color: #2d7a4f !important;
+    color: #a8ffb8 !important;
+}
+
+body.dark-theme .alert-warning {
+    background-color: #4d3d1a !important;
+    border-color: #7a6a2d !important;
+    color: #ffd8a8 !important;
+}
+
+body.dark-theme .alert-danger {
+    background-color: #4d1a1a !important;
+    border-color: #7a2d2d !important;
+    color: #ffa8a8 !important;
+}

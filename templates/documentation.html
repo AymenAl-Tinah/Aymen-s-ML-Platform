@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Generation - Aymen's ML Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="dark-theme">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><i class="fas fa-robot"></i> Aymen's ML Platform</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/data">Data</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/preprocess">Preprocess</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/visualize">Visualize</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/train">Train</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/evaluate">Evaluate</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/documentation">Report</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Professional Progress Tracker -->
+    <div class="progress-tracker-container">
+        <div class="container">
+            <div class="progress-tracker">
+                <div class="progress-step completed" data-step="home" data-page="/">
+                    <div class="step-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="step-label">Home</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step completed" data-step="data" data-page="/data">
+                    <div class="step-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="step-label">Data</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step completed" data-step="preprocess" data-page="/preprocess">
+                    <div class="step-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="step-label">Preprocess</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step completed" data-step="visualize" data-page="/visualize">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="step-label">Visualize</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step completed" data-step="train" data-page="/train">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="step-label">Train</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step completed" data-step="evaluate" data-page="/evaluate">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="step-label">Evaluate</div>
+                </div>
+                <div class="progress-line completed"></div>
+                
+                <div class="progress-step active" data-step="report" data-page="/documentation">
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="step-label">Report</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <h2 class="mb-4"><i class="fas fa-file-alt"></i> Report Generation</h2>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-cog"></i> Report Configuration</h5>
+            </div>
+            <div class="card-body">
+                <form id="reportForm">
+                    <div class="mb-3">
+                        <label for="projectName" class="form-label">Project Name</label>
+                        <input type="text" class="form-control" id="projectName" value="ML Auto Project Analysis" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Include in Report:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeDataset" checked>
+                            <label class="form-check-label" for="includeDataset">Dataset Summary</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includePreprocessing" checked>
+                            <label class="form-check-label" for="includePreprocessing">Preprocessing Details</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeVisualizations" checked>
+                            <label class="form-check-label" for="includeVisualizations">Data Visualizations</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeComparison" checked>
+                            <label class="form-check-label" for="includeComparison">Model Comparison</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeBestModel" checked>
+                            <label class="form-check-label" for="includeBestModel">Best Model Details</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="includeConclusions" checked>
+                            <label class="form-check-label" for="includeConclusions">Conclusions & Recommendations</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-file-word"></i> Generate DOCX Report
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="generationProgress" class="card mb-4" style="display: none;">
+            <div class="card-body text-center">
+                <div class="spinner-border text-primary mb-3"></div>
+                <h5>Generating professional report...</h5>
+                <p class="text-muted">Compiling all results and creating document</p>
+            </div>
+        </div>
+
+        <div id="reportSuccess" class="card mb-4" style="display: none;">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-check-circle"></i> Report Generated Successfully!</h5>
+            </div>
+            <div class="card-body text-center">
+                <i class="fas fa-file-word fa-5x text-primary mb-3"></i>
+                <h4>Your report is ready!</h4>
+                <p class="lead">A comprehensive DOCX report has been generated with all your ML project results.</p>
+                <a id="downloadLink" href="#" class="btn btn-success btn-lg">
+                    <i class="fas fa-download"></i> Download Report
+                </a>
+                <hr class="my-4">
+                <h5>What's Next?</h5>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fas fa-redo fa-2x text-primary mb-2"></i>
+                                <h6>Start New Project</h6>
+                                <a href="/data" class="btn btn-outline-primary btn-sm">Upload New Data</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fas fa-save fa-2x text-success mb-2"></i>
+                                <h6>Saved Models</h6>
+                                <p class="small">Models saved in /models directory</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fas fa-share-alt fa-2x text-info mb-2"></i>
+                                <h6>Share Results</h6>
+                                <p class="small">Report ready for distribution</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="alertContainer"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                project_name: document.getElementById('projectName').value,
+                include_visualizations: document.getElementById('includeVisualizations').checked
+            };
+            
+            document.getElementById('generationProgress').style.display = 'block';
+            
+            try {
+                const response = await fetch('/api/report/generate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('downloadLink').href = data.download_url;
+                    document.getElementById('reportSuccess').style.display = 'block';
+                    showAlert('Report generated successfully!', 'success');
+                } else {
+                    showAlert('Error: ' + data.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('Report generation failed: ' + error.message, 'danger');
+            } finally {
+                document.getElementById('generationProgress').style.display = 'none';
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            alert.innerHTML = `${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+            alertContainer.appendChild(alert);
+            setTimeout(() => alert.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
