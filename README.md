@@ -28,6 +28,19 @@ Aymen's ML Platform is a comprehensive, automated machine learning platform desi
 - **Comprehensive Evaluation** - Detailed metrics and comparison charts
 - **Professional Reporting** - Generate publication-ready DOCX reports
 
+## 🎥 **Demo Video**
+
+Watch Aymen's ML platform in action!
+
+<video width="800" controls>
+  <source src="./Aymen's ML Platform.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+**📹 [Download Video](./Aymen's ML Platform.mp4)** (if video doesn't play above)
+
+
+
 ## ✨ Features
 
 ### 🔍 Smart Data Detection
