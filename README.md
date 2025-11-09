@@ -481,20 +481,6 @@ For issues, questions, or suggestions:
 
 **© 2025 Aymen's Labs - All Rights Reserved**
 
-## 🗺️ Roadmap
-
-**Version 2.0 (Planned):**
-- [ ] Neural network support (TensorFlow/PyTorch)
-- [ ] Time series analysis
-- [ ] Natural Language Processing (NLP) tasks
-- [ ] Image classification support
-- [ ] Real-time model deployment
-- [ ] A/B testing framework
-- [ ] Model monitoring dashboard
-- [ ] Automated feature engineering
-- [ ] Explainable AI (SHAP, LIME)
-- [ ] Multi-language support
-
 ---
 
 <div align="center">
